@@ -1,28 +1,24 @@
 import unittest
 
-class Dollar:
-    __amount = 0
+class Money:
+    _amount = 0
 
     def __init__(self, amount):
-        self.__amount = amount
+        self._amount = amount
 
+    def __eq__(self, money):
+        return self._amount == money._amount
+
+class Dollar(Money):
     def times(self, multiplier):
-        return Dollar(self.__amount * multiplier)
+        return Dollar(self._amount * multiplier)
 
-    def __eq__(self, dollar):
-        return self._Dollar__amount == dollar._Dollar__amount
 
-class Franc:
-    __amount = 0
-
-    def __init__(self, amount):
-        self.__amount = amount
-
+class Franc(Money):
     def times(self, multiplier):
-        return Franc(self.__amount * multiplier)
+        return Franc(self._amount * multiplier)
 
-    def __eq__(self, franc):
-        return self._Franc__amount == franc._Franc__amount
+
 
 class TestMethods(unittest.TestCase):
 
@@ -36,6 +32,8 @@ class TestMethods(unittest.TestCase):
     def test_equality(self):
         self.assertTrue(Dollar(5).__eq__(Dollar(5)))
         self.assertFalse(Dollar(5).__eq__(Dollar(6)))
+        self.assertTrue(Franc(5).__eq__(Franc(5)))
+        self.assertFalse(Franc(5).__eq__(Franc(6)))
 
     def test_franc_multiplication(self):
         five = Franc(5)

@@ -13,6 +13,9 @@ class Money:
     
     def times(self, multiplier):
         return Money(self._amount * multiplier, self._currency)
+    
+    def plus(self, addend):
+        return Money(self._amount + addend._amount, self._currency)
 
     def currency(self):
         return self._currency

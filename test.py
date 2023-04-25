@@ -42,7 +42,9 @@ class Money(Expresssion):
 
 class Bank:
     def reduce(self, source, to):
-        return Money.dollar(10)
+        sum = source
+        amount = sum.augend._amount + sum.addend._amount
+        return Money(amount, to)
 
 class TestMethods(unittest.TestCase):
 

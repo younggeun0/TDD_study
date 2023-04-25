@@ -12,6 +12,18 @@ class Dollar:
     def __eq__(self, dollar):
         return self._Dollar__amount == dollar._Dollar__amount
 
+class Franc:
+    __amount = 0
+
+    def __init__(self, amount):
+        self.__amount = amount
+
+    def times(self, multiplier):
+        return Franc(self.__amount * multiplier)
+
+    def __eq__(self, franc):
+        return self._Franc__amount == franc._Franc__amount
+
 class TestMethods(unittest.TestCase):
 
     # 어떤 금액(주가)을 어떤 수(주식의 수)에 곱한 금액을 결과로 얻을 수 있어야 한다

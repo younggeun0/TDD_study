@@ -1,17 +1,16 @@
 import unittest
 
 class Dollar:
-    amount = 0
+    __amount = 0
 
     def __init__(self, amount):
-        self.amount = amount
+        self.__amount = amount
 
     def times(self, multiplier):
-        return Dollar(self.amount * multiplier)
-    
-    def equals(self, dollar):
-        return self.amount == dollar.amount
+        return Dollar(self.__amount * multiplier)
 
+    def __eq__(self, dollar):
+        return self._Dollar__amount == dollar._Dollar__amount
 
 class TestMethods(unittest.TestCase):
 
@@ -19,15 +18,12 @@ class TestMethods(unittest.TestCase):
     def test_multiplication(self):
         five = Dollar(5)
         
-        product = five.times(2)
-        self.assertEqual(10, product.amount)
-
-        product = five.times(3)
-        self.assertEqual(15, product.amount)
+        self.assertEqual(Dollar(10), five.times(2))
+        self.assertEqual(Dollar(15), five.times(3))
 
     def test_equality(self):
-        self.assertTrue(Dollar(5).equals(Dollar(5)))
-        self.assertFalse(Dollar(5).equals(Dollar(6)))
+        self.assertTrue(Dollar(5).__eq__(Dollar(5)))
+        self.assertFalse(Dollar(5).__eq__(Dollar(6)))
 
 
 if __name__ == '__main__':

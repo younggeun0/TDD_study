@@ -4,6 +4,14 @@ import unittest
 class Expresssion:
     pass
 
+class Sum(Expresssion):
+    augend = None
+    addend = None
+
+    def __init__(self, augend, addend):
+        self.augend = augend
+        self.addend = addend
+
 class Money(Expresssion):
     _amount = 0
     _currency = ''
@@ -19,7 +27,7 @@ class Money(Expresssion):
         return Money(self._amount * multiplier, self._currency)
     
     def plus(self, addend):
-        return Money(self._amount + addend._amount, self._currency)
+        return Sum(self, addend)
 
     def currency(self):
         return self._currency
@@ -31,7 +39,6 @@ class Money(Expresssion):
     @classmethod
     def franc(cls, amount):
         return Money(amount, "CHF")
-
 
 class Bank:
     def reduce(self, source, to):

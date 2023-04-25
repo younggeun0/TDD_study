@@ -46,6 +46,8 @@ class Money(Expresssion):
 
 class Bank:
     def reduce(self, source, to):
+        if isinstance(source, Money):
+            return source
         sum = source
         return sum.reduce(to)
 
@@ -92,6 +94,11 @@ class TestMethods(unittest.TestCase):
         bank = Bank()
         result = bank.reduce(sum, "USD")
         self.assertEqual(Money.dollar(7), result)
+
+    def test_reduce_money(self):
+        bank = Bank()
+        result = bank.reduce(Money.dollar(1), "USD")
+        self.assertEqual(Money.dollar(1), result)
 
 if __name__ == '__main__':
     unittest.main()

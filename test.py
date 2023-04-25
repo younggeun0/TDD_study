@@ -9,10 +9,10 @@ class Money:
         self._currency = currency
 
     def __eq__(self, money):
-        return self._amount == money._amount and self.__class__ == money.__class__
+        return self._amount == money._amount and self._currency == money._currency
     
     def times(self, multiplier):
-        pass
+        return Money(self._amount * multiplier, self._currency)
 
     def currency(self):
         return self._currency
@@ -24,14 +24,13 @@ class Money:
     @classmethod
     def franc(cls, amount):
         return Franc(amount, "CHF")
+    
 
 class Dollar(Money):
-    def times(self, multiplier):
-        return Money.dollar(self._amount * multiplier)
+    pass
 
 class Franc(Money):
-    def times(self, multiplier):
-        return Money.franc(self._amount * multiplier)
+    pass
 
 
 class TestMethods(unittest.TestCase):

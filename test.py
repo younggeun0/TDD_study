@@ -1,6 +1,10 @@
 import unittest
 
-class Money:
+
+class Expresssion:
+    pass
+
+class Money(Expresssion):
     _amount = 0
     _currency = ''
 
@@ -27,6 +31,11 @@ class Money:
     @classmethod
     def franc(cls, amount):
         return Money(amount, "CHF")
+
+
+class Bank:
+    def reduce(self, source, to):
+        return Money.dollar(10)
 
 class TestMethods(unittest.TestCase):
 

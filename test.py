@@ -4,8 +4,9 @@ class Money:
     _amount = 0
     _currency = ''
 
-    def __init__(self, amount):
+    def __init__(self, amount, currency):
         self._amount = amount
+        self._currency = currency
 
     def __eq__(self, money):
         return self._amount == money._amount and self.__class__ == money.__class__
@@ -13,27 +14,24 @@ class Money:
     def times(self, multiplier):
         pass
 
+    def currency(self):
+        return self._currency
+
     @classmethod
     def dollar(cls, amount):
-        return Dollar(amount)
+        return Dollar(amount, "USD")
     
     @classmethod
     def franc(cls, amount):
-        return Franc(amount)
+        return Franc(amount, "CHF")
 
 class Dollar(Money):
     def times(self, multiplier):
-        return Dollar(self._amount * multiplier)
-    
-    def currency(self):
-        return "USD"
+        return Money.dollar(self._amount * multiplier)
 
 class Franc(Money):
     def times(self, multiplier):
-        return Franc(self._amount * multiplier)
-
-    def currency(self):
-        return "CHF"
+        return Money.franc(self._amount * multiplier)
 
 
 class TestMethods(unittest.TestCase):

@@ -11,6 +11,10 @@ class Sum(Expresssion):
     def __init__(self, augend, addend):
         self.augend = augend
         self.addend = addend
+    
+    def reduce(self, to):
+        amount = self.augend._amount + self.addend._amount
+        return Money(amount, to)
 
 class Money(Expresssion):
     _amount = 0
@@ -43,8 +47,7 @@ class Money(Expresssion):
 class Bank:
     def reduce(self, source, to):
         sum = source
-        amount = sum.augend._amount + sum.addend._amount
-        return Money(amount, to)
+        return sum.reduce(to)
 
 class TestMethods(unittest.TestCase):
 

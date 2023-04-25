@@ -19,19 +19,11 @@ class Money:
 
     @classmethod
     def dollar(cls, amount):
-        return Dollar(amount, "USD")
+        return Money(amount, "USD")
     
     @classmethod
     def franc(cls, amount):
-        return Franc(amount, "CHF")
-    
-
-class Dollar(Money):
-    pass
-
-class Franc(Money):
-    pass
-
+        return Money(amount, "CHF")
 
 class TestMethods(unittest.TestCase):
 
@@ -45,8 +37,6 @@ class TestMethods(unittest.TestCase):
     def test_equality(self):
         self.assertTrue(Money.dollar(5).__eq__(Money.dollar(5)))
         self.assertFalse(Money.dollar(5).__eq__(Money.dollar(6)))
-        self.assertTrue(Money.franc(5).__eq__(Money.franc(5)))
-        self.assertFalse(Money.franc(5).__eq__(Money.franc(6)))
         self.assertFalse(Money.franc(5).__eq__(Money.dollar(5)))
 
     def test_franc_multiplication(self):

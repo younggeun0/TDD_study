@@ -35,6 +35,9 @@ class Money(Expresssion):
 
     def currency(self):
         return self._currency
+    
+    def reduce(self, to):
+        return self
 
     @classmethod
     def dollar(cls, amount):
@@ -47,7 +50,7 @@ class Money(Expresssion):
 class Bank:
     def reduce(self, source, to):
         if isinstance(source, Money):
-            return source
+            return source.reduce(to)
         sum = source
         return sum.reduce(to)
 

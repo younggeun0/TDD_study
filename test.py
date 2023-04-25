@@ -25,6 +25,12 @@ class TestMethods(unittest.TestCase):
         self.assertTrue(Dollar(5).__eq__(Dollar(5)))
         self.assertFalse(Dollar(5).__eq__(Dollar(6)))
 
+    def test_franc_multiplication(self):
+        five = Franc(5)
+        
+        self.assertEqual(Franc(10), five.times(2))
+        self.assertEqual(Franc(15), five.times(3))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -68,5 +68,12 @@ class TestMethods(unittest.TestCase):
         reduced = bank.reduce(sum, "USD")
         self.assertEqual(Money.dollar(10), reduced)
 
+    def test_plus_return_sum(self):
+        five = Money.dollar(5)
+        result = five.plus(five)
+        sum = result
+        self.assertEqual(five, sum.augend)
+        self.assertEqual(five, sum.addend)
+
 if __name__ == '__main__':
     unittest.main()

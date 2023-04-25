@@ -2,6 +2,7 @@ import unittest
 
 class Money:
     _amount = 0
+    _currency = ''
 
     def __init__(self, amount):
         self._amount = amount
@@ -23,12 +24,16 @@ class Money:
 class Dollar(Money):
     def times(self, multiplier):
         return Dollar(self._amount * multiplier)
-
+    
+    def currency(self):
+        return "USD"
 
 class Franc(Money):
     def times(self, multiplier):
         return Franc(self._amount * multiplier)
 
+    def currency(self):
+        return "CHF"
 
 
 class TestMethods(unittest.TestCase):

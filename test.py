@@ -1,9 +1,23 @@
 import unittest
 
 
+class Pair():
+    _from = None
+    _to = None
+
+    def __init__(self, _from, to):
+        self._from = _from
+        self._to = to
+
+    def __eq__(self, pair):
+        return self._from == pair._from and self._to == pair._to
+    
+    def __hash__(self):
+        return 0
+
 class Expresssion:
-    def reduce(self, to):
-        pass
+    def reduce(self, source, to):
+        return source.reduce(to)
 
 class Sum(Expresssion):
     augend = None
@@ -13,7 +27,7 @@ class Sum(Expresssion):
         self.augend = augend
         self.addend = addend
     
-    def reduce(self, to):
+    def reduce(self, bank, to):
         amount = self.augend._amount + self.addend._amount
         return Money(amount, to)
 
@@ -37,8 +51,9 @@ class Money(Expresssion):
     def currency(self):
         return self._currency
     
-    def reduce(self, to):
-        return self
+    def reduce(self, bank, to):
+        rate = bank.rate(self._currency, to)
+        return Money(self._amount / rate, to)
 
     @classmethod
     def dollar(cls, amount):
@@ -49,8 +64,20 @@ class Money(Expresssion):
         return Money(amount, "CHF")
 
 class Bank:
+    rates = {}
+
+    def rate(self, _from, to):
+        if (_from == to):
+            return 1
+
+        rate = self.rates.get(Pair(_from, to))
+        return rate
+
     def reduce(self, source, to):
-        return source.reduce(to)
+        return source.reduce(self, to)
+    
+    def addRate(self, source, to, rate):
+        self.rates[Pair(source, to)] = rate
 
 class TestMethods(unittest.TestCase):
 
@@ -106,6 +133,9 @@ class TestMethods(unittest.TestCase):
         bank.addRate("CHF", "USD", 2)
         result = bank.reduce(Money.franc(2), "USD")
         self.assertEqual(Money.dollar(1), result)
+
+    def test_identity_rate(self):
+        self.assertEqual(1, Bank().rate("USD", "USD"))
 
 if __name__ == '__main__':
     unittest.main()

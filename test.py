@@ -21,21 +21,27 @@ class Expresssion:
 
     def reduce(self, source, to):
         return source.reduce(to)
+    
+    def times(self, multiplier):
+        pass
 
 class Sum(Expresssion):
     augend = None
     addend = None
 
+    def plus(self, addend):
+        return Sum(self, addend)
+
     def __init__(self, augend, addend):
         self.augend = augend
         self.addend = addend
-
-    def plus(self, addend):
-        pass
     
     def reduce(self, bank, to):
         amount = self.augend.reduce(bank, to)._amount + self.addend.reduce(bank, to)._amount
         return Money(amount, to)
+    
+    def times(self, multiplier):
+        return Sum(self.augend.times(multiplier), self.addend.times(multiplier))
 
 class Money(Expresssion):
     _amount = 0

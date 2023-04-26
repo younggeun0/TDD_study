@@ -176,5 +176,9 @@ class TestMethods(unittest.TestCase):
         result = bank.reduce(sum, "USD")
         self.assertEqual(Money.dollar(20), result)
 
+    def test_plus_same_currency_returns_money(self):
+        sum = Money.dollar(1).plus(Money.dollar(1))
+        self.assertTrue(isinstance(sum, Sum))
+
 if __name__ == '__main__':
     unittest.main()

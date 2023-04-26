@@ -101,5 +101,11 @@ class TestMethods(unittest.TestCase):
         result = bank.reduce(Money.dollar(1), "USD")
         self.assertEqual(Money.dollar(1), result)
 
+    def test_reduce_money_difference_currency(self):
+        bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        result = bank.reduce(Money.franc(2), "USD")
+        self.assertEqual(Money.dollar(1), result)
+
 if __name__ == '__main__':
     unittest.main()

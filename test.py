@@ -152,5 +152,23 @@ class TestMethods(unittest.TestCase):
         result = bank.reduce(fiveBucks.plus(tenFrancs), "USD")
         self.assertEqual(Money.dollar(10), result)
 
+    def test_sum_plus_money(self):
+        fiveBucks = Money.dollar(5)
+        tenFrans = Money.franc(10)
+        bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        sum = Sum(fiveBucks, tenFrans).plus(fiveBucks)
+        result = bank.reduce(sum, "USD")
+        self.assertEqual(Money.dollar(15), result)
+
+    def test_sum_times(self):
+        fiveBucks = Money.dollar(5)
+        tenFrans = Money.franc(10)
+        bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        sum = Sum(fiveBucks, tenFrans).times(2)
+        result = bank.reduce(sum, "USD")
+        self.assertEqual(Money.dollar(20), result)
+
 if __name__ == '__main__':
     unittest.main()
